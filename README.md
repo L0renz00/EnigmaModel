@@ -1,5 +1,6 @@
 # EnigmaModel
-An accurate model of the Enigma encryption machine, written in Python and deployed to a webserver.  
+An accurate model of the Enigma I encryption machine (used by the german Wehrmacht from 1932 - 1945), 
+written in Python and deployed to a webserver.  
 This model was created for the Fünfte Prüfungskomponente of the german Abiturexam. 
 
 ## Design Ethics
