@@ -1,16 +1,18 @@
 class Enigma:
-    #enigma machine setup with plugboard configuration, right rotor,middle rotor and left rotor configuration,
-    #the daily key and the session key
-    def __init__(self, plugboard, r_rotor, m_rotor, l_rotor, reflector, daykey, seshkey):
-        self.plugboard = plugboard
-        self.r_rotor = r_rotor
-        self.m_rotor = m_rotor
-        self.l_rotor = l_rotor
-        self.reflector = reflector
-        self.daykey = daykey
+    #Die Enigma Konfiguration mit den konfigurationen der verschiedenen Walzen 
+    #(l = links, r = rechts, m = mittel), dem steckerbrett und den vershiedenen schlüsseln
+    #für den tag und die Sitzung
+
+    def __init__(self, steckerboard, r_walze, m_walze, l_walze, umkehrwalze, tagkey, seshkey):
+        self.steckerboard = steckerboard
+        self.r_walze = r_walze
+        self.m_walze = m_walze
+        self.l_walze = l_walze
+        self.umkehrwalze = umkehrwalze
+        self.tagkey = tagkey
         self.seshkey = seshkey
 
-class Permutator:
+class Permutierer:
     pass
 
 def main():

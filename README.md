@@ -1,16 +1,16 @@
 # EnigmaModel
-An accurate model of the Enigma I encryption machine (used by the german Wehrmacht from 1932 - 1945), 
-written in Python and deployed to a webserver.  
-This model was created for the Fünfte Prüfungskomponente of the german Abiturexam. 
+Ein genaues Modell der Verschlüsselungsmaschine Enigma I (von 1932 - 1945 von der deutschen Wehrmacht benutzt), 
+geschrieben in Python und bereitgestellt auf einem Webserver.  
+Dieses Modell wurde für die Fünfte Prüfungskomponente des Abiturexamens erstellt. 
 
-## Design Ethics
-- Clean, more functional than oop-oriented implementation
-- to more easily facilitate change-over of web deployment
-- simple, concise implementations
+## Design-Ethik
+- Saubere, funktionalere als OOP-orientierte Implementierung
+- leichtere Umstellung des Webeinsatzes
+- einfache, prägnante Implementierungen
 
-## Design Plan
-- A class containing the specific states of the different enigma-components  
-- Instance of that class created at start of app, to be passed around the application  
-- Application begins with letter to be encrypted, which is then passed around the application with the enigma-object  
-- Encryption-parts of the machine are "represented" with pure functions that execute the encryption steps of the different enigma-components
-- Instance of enigma and letter passed through these functions until encrypted letter emerges at end of "function chain"
+## Entwurfsplan
+- Eine Klasse, die die spezifischen Zustände der verschiedenen enigma-Komponenten enthält  
+- Eine Instanz dieser Klasse wird beim Start der Anwendung erstellt und durch die Anwendung gereicht  
+- Die Anwendung beginnt mit einem zu verschlüsselnden Brief, der dann mit dem Enigma-Objekt durch die Anwendung gereicht wird  
+- Die Verschlüsselungsteile der Maschine werden durch reine Funktionen "repräsentiert", die die Verschlüsselungsschritte der verschiedenen Enigma-Komponenten ausführen
+- Enigma-Instanz und Buchstabe werden durch diese Funktionen geleitet, bis am Ende der "Funktionskette" ein verschlüsselter Brief entsteht
