@@ -103,7 +103,7 @@ def main():
 
     enigma = Enigma(Enigma.walze_I, Enigma.walze_II, Enigma.walze_III, Enigma.umkehrwalze, Enigma.steckerbrett)
 
-    charakter = 'A'
+    charakter = str(input("Charakter zum verschlüsseln: "))
 
     charakter = schluesseln(charakter, enigma)
 
@@ -113,9 +113,9 @@ def main():
     
     charakter2 = charakter
 
+    #zurücksetzen der enigma
+    enigma = Enigma(Enigma.walze_I, Enigma.walze_II, Enigma.walze_III, Enigma.umkehrwalze, Enigma.steckerbrett)
     charakter2 = schluesseln(charakter2, enigma)
-    
-    print("Hats geklappt ????: ", charakter, " ", charakter2)
 
 if __name__ == "__main__":
     main()
