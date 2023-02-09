@@ -1,9 +1,14 @@
+from copy import deepcopy
+
 class Walze:
     def __init__(self, chiffre, umkehrchar):
         self.chiffre = chiffre
         self.umkehrchar = umkehrchar
         self.start_position = chiffre[0]
         self.counter = 0
+
+    def __str__(self):
+        return f'Walze(chiffre: {self.chiffre}, counter: {self.counter})'
 
     def drehen(self):
         #enimga walzen drehen sich so, dass eine umdrehung einer permutation vom ersten charkter zum zweiten entspricht
@@ -40,6 +45,9 @@ class Enigma:
         #self.tagkey = tagkey
         #self.seshkey = seshkey
 
+    def __str__(self):
+        return f'Enigma(\nr_walze: {self.r_walze}, \nm_walze: {self.m_walze}, \nl_walze: {self.l_walze})'
+
 def zahl_buchstabe(zahl):
     return alphabet[zahl]
 
@@ -51,6 +59,7 @@ def buchstabe_zahl(char):
 def schluesseln(char, konfiguration):
     #erster Verschlüsselungsschritt ist walzen zu drehen!
     
+    """
     if konfiguration.m_walze.chiffre[0] == konfiguration.m_walze.umkehrchar:
     #doppelte umkehr hier implementiert, wenn mittlere walze an der umkehrposition ist, dann wird die linke walze einmal gedreht
     #aber wegen der doppelten umkehr die mittlere walze auch
@@ -60,7 +69,7 @@ def schluesseln(char, konfiguration):
         konfiguration.m_walze.drehen()
 
     konfiguration.r_walze.drehen()
-
+    """
 
     #zu verschlüsselnder charakter greift als zahl in list, wird so zu nächstem charakter verschlüsselt
     #zur demo bei jedem verschlüsselungsschritt einmal ausdrucken
@@ -101,21 +110,24 @@ def main():
     global alphabet
     alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-    enigma = Enigma(Enigma.walze_I, Enigma.walze_II, Enigma.walze_III, Enigma.umkehrwalze, Enigma.steckerbrett)
+    enigma = Enigma(deepcopy(Enigma.walze_I), deepcopy(Enigma.walze_II), deepcopy(Enigma.walze_III), deepcopy(Enigma.umkehrwalze), deepcopy(Enigma.steckerbrett))
 
     charakter = str(input("Charakter zum verschlüsseln: "))
 
+    print(enigma)
     charakter = schluesseln(charakter, enigma)
+    print(enigma)
 
-    print("Verschlüsselt zu: " + charakter)
 
     print("\n\nRückversuch\n\n");
     
     charakter2 = charakter
 
     #zurücksetzen der enigma
-    enigma = Enigma(Enigma.walze_I, Enigma.walze_II, Enigma.walze_III, Enigma.umkehrwalze, Enigma.steckerbrett)
+    enigma = Enigma(deepcopy(Enigma.walze_I), deepcopy(Enigma.walze_II), deepcopy(Enigma.walze_III), deepcopy(Enigma.umkehrwalze), deepcopy(Enigma.steckerbrett))
+    print(enigma)
     charakter2 = schluesseln(charakter2, enigma)
+    print(enigma)
 
 if __name__ == "__main__":
     main()
