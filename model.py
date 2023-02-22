@@ -25,6 +25,9 @@ class Enigma:
         #self.tagkey = tagkey
         #self.seshkey = seshkey
 
+    def __str__(self):
+        return f'Enigma(\nr_walze: {self.r_walze}, \nm_walze: {self.m_walze}, \nl_walze: {self.l_walze})'
+
 def zahl_buchstabe(zahl):
     return alphabet[zahl]
 
@@ -75,19 +78,18 @@ def main():
 
     enigma = Enigma(Enigma.walze_I, Enigma.walze_II, Enigma.walze_III, Enigma.umkehrwalze, Enigma.steckerbrett)
 
-    charakter = 'A'
+    charakter = str(input("Charakter zum Verschlüsseln: "))
 
+    print(enigma)
     charakter = schluesseln(charakter, enigma)
-
-    print("Verschlüsselt zu: " + charakter)
+    print(enigma)
 
     print("\n\nRückversuch\n\n");
-    
     charakter2 = charakter
 
+    print(enigma)
     charakter2 = schluesseln(charakter2, enigma)
-    
-    print("Hats geklappt ????: ", charakter, " ", charakter2)
+    print(enigma)
 
 if __name__ == "__main__":
     main()
