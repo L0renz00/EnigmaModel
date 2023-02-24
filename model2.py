@@ -11,19 +11,33 @@ IV =        "ESOVPZJAYQUIRHXLNFTGKDCMWB"
 V =         "VZBRGITYUPSDNHLXAWMJQOFECK"
 UKW_B =     "YRUHQSLDPXNGOKMIEBFZCWVJAT"
 
-def char_zahl_transform(char):
+def char_zahl(char):
     return ord(char) - 65
 
+def zahl_char(zahl):
+    return alphabet[zahl]
+
 def verschiebung(chiffre, zahl):
-    print("Chiffre vor Verschiebung:  " + chiffre)
+   #print("Chiffre vor Verschiebung:  " + chiffre)
     for i in range(zahl):
         char = chiffre[0]
         chiffre = chiffre[1:]
         chiffre += char
     
-    print("Chiffre nach Verschiebung: " + chiffre)
+    #print("Chiffre nach Verschiebung: " + chiffre)
     
     return chiffre
+
+#die walzenkonfiguration muss komplett reversed werden wenn man rückwärts durch die Maschine läuft
+def walzen_konf_reverse(walze):
+    rev_walze = []
+    for i in range(26):
+        rev_walze.append("")
+
+    for i in walze:
+        rev_walze[char_zahl(i)] = zahl_char(walze.index(i))
+
+    return rev_walze
 
 def verschluesseln(charakter, steckerbrett_konfiguration, charakter_route, walzen_drehung):
     
@@ -33,7 +47,7 @@ def verschluesseln(charakter, steckerbrett_konfiguration, charakter_route, walze
 
     #"""
     #erste steckerbrett permutation
-    charakter = steckerbrett_konfiguration[char_zahl_transform(charakter)]
+    charakter = steckerbrett_konfiguration[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
     #"""
 
@@ -41,32 +55,36 @@ def verschluesseln(charakter, steckerbrett_konfiguration, charakter_route, walze
     #Enigma ist konfiguriert mit den Walzen I, II und III
     #die Walzen werden von links nach rechts in die Enigma platziert
     #deshalb ist erste walze III
-    charakter = _III[char_zahl_transform(charakter)]
+    charakter = _III[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
-    charakter = _II[char_zahl_transform(charakter)]
+    charakter = _II[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
     #"""
-    charakter = _I[char_zahl_transform(charakter)]
+    charakter = _I[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
     #"""
 
     #darauf folgt umkehrwalze
-    charakter = UKW_B[char_zahl_transform(charakter)]
+    charakter = UKW_B[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
+
+    _I = walzen_konf_reverse(_I)
+    _II = walzen_konf_reverse(_II)
+    _III = walzen_konf_reverse(_III)
 
     #"""
     #dann walzen in umgekehrter reihenfolge
-    charakter = _I[char_zahl_transform(charakter)]
+    charakter = _I[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
     #"""
-    charakter = _II[char_zahl_transform(charakter)]
+    charakter = _II[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
-    charakter = _III[char_zahl_transform(charakter)]
+    charakter = _III[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
     #"""
 
     #"""
-    charakter = steckerbrett_konfiguration[char_zahl_transform(charakter)]
+    charakter = steckerbrett_konfiguration[char_zahl(charakter)]
     charakter_route.append(deepcopy(charakter))
     #"""
 
