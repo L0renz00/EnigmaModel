@@ -1,70 +1,103 @@
 from copy import deepcopy
+from time import sleep
 
 
 def cli():
     alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     # original walzenverdrahtungen der Enigma-I
-    walze_I =     Walze("I", "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
-    walze_II =    Walze("II", "AJDKSIRUXBLHWTMCQGZNPYFVOE", "E")
-    walze_III =   Walze("III", "BDFHJLCPRTXVZNYEIWGAKMUSQO", "D")
-    walze_IV =    Walze("IV", "ESOVPZJAYQUIRHXLNFTGKDCMWB", "R")
-    walze_V =     Walze("V", "VZBRGITYUPSDNHLXAWMJQOFECK", "H")
-    ukw_b =     ["AY", "BR", "CU", "DH", "EQ", "FS", "GL", "IP", "JX", "KN", "MO", "ZT", "WV"]
+    walze_I = Walze("I", "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+    walze_II = Walze("II", "AJDKSIRUXBLHWTMCQGZNPYFVOE", "E")
+    walze_III = Walze("III", "BDFHJLCPRTXVZNYEIWGAKMUSQO", "D")
+    walze_IV = Walze("IV", "ESOVPZJAYQUIRHXLNFTGKDCMWB", "R")
+    walze_V = Walze("V", "VZBRGITYUPSDNHLXAWMJQOFECK", "H")
+    ukw_b = ["AY", "BR", "CU", "DH", "EQ", "FS", "GL", "IP", "JX", "KN", "MO", "ZT", "WV"]
 
     # ausgewählte Walzen hier auswählen, 
     # erste walze in liste ist links installierte in der Enigma, erste die mittlere etc.
-    walzen_wahl = input("gib als string die walzen ein die verwendet werden sollen, in der richtigen Reihenfolge, erste eingegebene walze ist linke in der maschine etc.(so: I II IV): \n")
+    print("Herzlich Willkommen zu der Enigma-I!")
+    print("Im ersten Schritt wählen Sie die drei Walzen aus, die in die Maschine eingesetzt werden sollen.")
+    print("Sie können aus den Walzen I bis V auswählen, geben Sie diese bitte so formatiert ein: \nI II III")
+    print("Die Reihenfolge der Eingabe bestimmt die Reihenfolge der Walzen in der Maschine, die zuerst eingegebene ist die linke Walze etc.")
+    print("Wenn Sie sich für keine Walzen entscheiden möchten, wird die Standardeinstellung der Walzen I, II und III verwendet.")
     walzen = []
-    if len(walzen_wahl.split()) != 3:
-        print("zu viele oder zu wenige walzen ausgewählt!")
-        exit()
-    for i in walzen_wahl.split():
-        match i:
-            case "I":
-                walzen.append(deepcopy(walze_I))
-            case "II":
-                walzen.append(deepcopy(walze_II))
-            case "III":
-                walzen.append(deepcopy(walze_III))
-            case "IV":
-                walzen.append(deepcopy(walze_IV))
-            case "V":
-                walzen.append(deepcopy(walze_V))
-            case other:
-                print(f"{other} ist keine richtige walzenwahl")
-                exit()
 
+    while True:
+
+        walzen_wahl = input("Geben Sie jetzt ihre Walzen ein und drücken Sie danach die Enter-Taste.\n")
+
+        if len(walzen_wahl) == 0:
+            walzen = [deepcopy(walze_I), deepcopy(walze_II), deepcopy(walze_III)]
+            break
+
+        if len(walzen_wahl.split()) != 3:
+            print("Zu viele oder zu wenige walzen ausgewählt!")
+            print(walzen_wahl.split())
+
+            continue
+
+        for i in walzen_wahl.split():
+            match i:
+                case "I":
+                    walzen.append(deepcopy(walze_I))
+                case "II":
+                    walzen.append(deepcopy(walze_II))
+                case "III":
+                    walzen.append(deepcopy(walze_III))
+                case "IV":
+                    walzen.append(deepcopy(walze_IV))
+                case "V":
+                    walzen.append(deepcopy(walze_V))
+                case other:
+                    print(f"{other} ist keine mögliche Walzenwahl.")
+                    continue
+
+        break
+
+    steckerbrett = ["AB", "GH", "UJ", "ZW", "FL", "YX", "OP", "UN", "SQ", "MK"]
     # steckerbrett konfiguration hier eingeben:
-    steckerbrett_wahl = input("gib die zu vertauschenden buchstaben ein(so: AB DC etc...): \n")
-    for i in steckerbrett_wahl.split():
-        if len(i) != 2:
-            print("falsche vertausch input: ", i)
-            exit()
-        if i[0] not in alphabet or i[1] not in alphabet:
-            print("falsche charaktere eingegeben: ", i)
-            exit()
-    # verflachen der list von 2 dimensional zu eindimensional zur duplikatcheckung
-    stecker = [x for y in steckerbrett_wahl for x in y]
-    # set() entfernt duplikate, wenn set kürzer ist dann gibt es duplikate
-    if len(stecker) > len(set(stecker)):
-        print("duplikate in der steckerbrett-eingabe!")
-        exit()
+    print("Im zweiten Schritt können Sie die durch das Steckerbrett zu vertauschenden Buchstaben auswählen.")
+    print("Sie können entweder ihre Buchstaben eingeben oder eine Standardkonfiguration wählen, welche die folgenden Buchstaben austauscht: ")
+    for i in steckerbrett:
+        print(i, end=" ")
+    print()
+    print("Wenn Sie ihre eigenen Buchstaben eingeben möchten, formatieren Sie diese bitte so:\nAB CD EF GH IJ\n")
+    print("Beachten Sie auch, dass Buchstaben sich nicht wiederholen sollten.")
+    while True:
+        steckerbrett_wahl = input("Geben Sie jetzt ihre zu vertauschenden Buchstaben ein und drücken Sie danach die Enter-Taste.\n")
 
-    steckerbrett = steckerbrett_wahl.split()
+        for i in steckerbrett_wahl.split():
+            if len(i) != 2:
+                print("Falsche Eingabe: ", i)
+                continue
+            if i[0] not in alphabet or i[1] not in alphabet:
+                print("Falsche Eingabe", i)
+                continue
+        # verflachen der list von 2 dimensional zu eindimensional zur duplikatcheckung
+        stecker = [x for y in steckerbrett_wahl for x in y]
+        stecker = [x for x in stecker if x != " "]
+        # set() entfernt duplikate, wenn set kürzer ist dann gibt es duplikate
+        if len(stecker) > len(set(stecker)):
+            print("Duplikate in der Steckerbrett-Eingabe.")
+            print(stecker, " ", set(stecker))
+            continue
 
-    # umkehrwalze hier auswählen:
-    print("Umkehrwalze ist UKW_B")
-    umkehrwalze = deepcopy(ukw_b)
+        steckerbrett = steckerbrett_wahl.split()
+        break
 
-    # tagesschluessel = "AAA"
-    tagesschluessel = input("gib die walzenstellung ein(so: XXX): ")
-    if len(tagesschluessel) != 3:
-        print("Falscher Tagesschluessel!")
-        exit()
-    for i in tagesschluessel:
-        if i not in alphabet:
-            print("Falscher Charakter in Tagesschluessel!")
-            exit()
+    umkehrwalze = ukw_b
+    
+    tagesschluessel = "IQB"
+    print("Im dritten und letzten Schritt können Sie noch die Walzenrotation konfigurieren, indem Sie drei Buchstaben eingeben, welche die Walzenrotation bestimmen.")
+    while True:
+        tagesschluessel = input("gib die walzenstellung ein(so: XXX): ")
+        if len(tagesschluessel) != 3:
+            print("Falscher Tagesschluessel!")
+            continue
+        for i in tagesschluessel:
+            if i not in alphabet:
+                print("Falscher Charakter: ", i)
+                continue
+        break
 
     enigma = EnigmaKonf(walzen, steckerbrett, umkehrwalze, tagesschluessel)
 
@@ -127,11 +160,12 @@ def zahl_char(zahl):
 def char_zahl(char):
     return ord(char) - 65
 
+
 # klasse um alle Enigma Konfigurationsoptionen zu speichern
 class EnigmaKonf:
     # alle Konfigurationsoptionen die von dem Nutzer eingestellt werden
     # werden hier eingespeist
-    # walzen_konf sind die drei vom nutzer sichtbaren Buchstaben die 
+    # walzen_konf sind die drei vom nutzer sichtbaren Buchstaben die
     # durch die rotation der walzen eingestellt werden, analog zum
     # Tagesschlüssel bzw. Nachrichtenschlüssel der vom Nutzer eingestellt wird
     def __init__(self, walzen, steckerbrett, umkehrwalze, tagesschluessel):
@@ -189,8 +223,8 @@ class Substitution:
             if char in i:
                 if i[0] == char:
                     return i[1]
-                else:  # eigentlich unnötig aber für codeklarheit
-                    return i[0]
+                return i[0]
+
         return char
 
 
