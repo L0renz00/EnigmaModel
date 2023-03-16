@@ -88,9 +88,9 @@ def cli():
     
     tagesschluessel = "IQB"
     print("Im dritten und letzten Schritt können Sie noch die Walzenrotation konfigurieren, indem Sie drei Buchstaben eingeben, welche die Walzenrotation bestimmen.")
-    print("Geben sie die Walzenstellung wiefolgt formatiert ein: \nXXX\n")
+    print("Geben sie die Walzenstellung wiefolgt formatiert ein: \nXXX")
     while True:
-        tagesschluessel = input("Geben sie jetzt ihre Walzenstellung ein")
+        tagesschluessel = input("Geben sie jetzt ihre Walzenstellung ein\n")
         if len(tagesschluessel) != 3:
             print("Falscher Tagesschluessel!")
             continue
@@ -105,14 +105,30 @@ def cli():
     # einstellung der walzenstellung, macht hier beim beispiel A zu jedem chiff
     # re-anfangsbuchstaben der walzen
     enigma.walzen_stellen(tagesschluessel)
+    anfangskonfiguration = deepcopy(enigma)
 
-    klar_text = input("Gib den zu verschluesselnden Text ein: \n")
-    chiffre_text = ""
+    print("Jetzt können sie Text mit ihrer konfigurierten Enigma verschlüsseln!")
+    print("Beachten sie, dass Groß- und Kleinschreibung verloren geht, und dass Leerzeichen mit 'X' ausgetauscht werden müssen!")
+    while True:
+        klar_text = input("Geben sie jetzt den zu verschlüsselnden Text ein: \n")
+        if " " in list(klar_text):
+            print("Leerzeichen in zu Text, versuchen sie es nochmal")
+            continue
+        chiffre_text = ""
 
-    for i in klar_text:
-        chiffre_text += verschluesseln(i, enigma)
+        for i in klar_text.upper():
+            chiffre_text += verschluesseln(i, enigma)
 
-    print(chiffre_text)
+        print(chiffre_text)
+        chiffre_text = ""
+
+        print("Möchten sie mit ihrer Anfangskonfiguration einen weiteren Text verschlüsseln / entschlüsseln?")
+        wiederholen = input("Wenn ja, tippen sie 'y' ein, wenn nicht 'n'")
+
+        if (wiederholen == "y"):
+            enigma = deepcopy(anfangskonfiguration)
+            continue
+        break
 
 
 if __name__ == "__main__":
